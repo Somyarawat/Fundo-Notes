@@ -19,8 +19,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final EmailUtil emailUtil;
 
-    private final BCryptPasswordEncoder passwordEncoder =
-            new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public ApiResponse register(UserDTO dto) {
