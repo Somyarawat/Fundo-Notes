@@ -28,4 +28,9 @@ public interface NoteService {
     void moveToTrash(String email, Long noteId);
 
     void restoreFromTrash(String email, Long noteId);
+
+    List<NoteResponseDTO> searchNotes(
+            String email,
+            String keyword
+    );
 }

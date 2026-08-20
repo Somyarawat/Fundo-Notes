@@ -12,4 +12,14 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
     List<Note> findByUser(User user);
 
     Optional<Note> findByIdAndUser(Long id, User user);
+
+    List<Note> findByUserAndTitleContainingIgnoreCase(
+            User user,
+            String title
+    );
+
+    List<Note> findByUserAndDescriptionContainingIgnoreCase(
+            User user,
+            String description
+    );
 }

@@ -44,6 +44,19 @@ public class NoteController {
         );
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<NoteResponseDTO>> searchNotes(
+            Authentication authentication,
+            @RequestParam String keyword) {
+
+        return ResponseEntity.ok(
+                noteService.searchNotes(
+                        authentication.getName(),
+                        keyword
+                )
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<NoteResponseDTO> getNoteById(
             Authentication authentication,

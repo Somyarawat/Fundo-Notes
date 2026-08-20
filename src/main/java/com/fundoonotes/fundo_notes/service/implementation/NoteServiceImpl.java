@@ -9,6 +9,7 @@ import com.fundoonotes.fundo_notes.repository.UserRepository;
 import com.fundoonotes.fundo_notes.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.stream.Stream;
 
 import java.util.List;
 
@@ -157,6 +158,36 @@ public class NoteServiceImpl implements NoteService {
         note.setTrashed(false);
 
         noteRepository.save(note);
+    }
+
+    @Override
+    public List<NoteResponseDTO> searchNotes(
+            String email,
+            String keyword) {
+
+        User user = getUser(email);
+
+        List<Note> titleResults =
+                noteRepository
+                        .findByUserAndTitleContainingIgnoreCase(
+                                user,
+                                keyword
+                        );
+
+        List<Note> descriptionResults =
+                noteRepository
+                        .findByUserAndDescriptionContainingIgnoreCase(
+                                user,
+                                keyword
+                        );
+
+        return Stream.concat(
+                        titleResults.stream(),
+                        descriptionResults.stream()
+                )
+                .distinct()
+                .map(this::convertToResponse)
+                .toList();
     }
 
     private User getUser(String email) {
