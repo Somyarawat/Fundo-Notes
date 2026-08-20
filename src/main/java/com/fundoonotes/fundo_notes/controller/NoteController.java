@@ -80,4 +80,56 @@ public class NoteController {
 
         return ResponseEntity.ok("Note deleted successfully");
     }
+
+    @PatchMapping("/{id}/pin")
+    public ResponseEntity<String> togglePin(
+            Authentication authentication,
+            @PathVariable Long id) {
+
+        noteService.togglePin(
+                authentication.getName(),
+                id
+        );
+
+        return ResponseEntity.ok("Note pin status updated");
+    }
+
+    @PatchMapping("/{id}/archive")
+    public ResponseEntity<String> toggleArchive(
+            Authentication authentication,
+            @PathVariable Long id) {
+
+        noteService.toggleArchive(
+                authentication.getName(),
+                id
+        );
+
+        return ResponseEntity.ok("Note archive status updated");
+    }
+
+    @PatchMapping("/{id}/trash")
+    public ResponseEntity<String> moveToTrash(
+            Authentication authentication,
+            @PathVariable Long id) {
+
+        noteService.moveToTrash(
+                authentication.getName(),
+                id
+        );
+
+        return ResponseEntity.ok("Note moved to trash");
+    }
+
+    @PatchMapping("/{id}/restore")
+    public ResponseEntity<String> restoreFromTrash(
+            Authentication authentication,
+            @PathVariable Long id) {
+
+        noteService.restoreFromTrash(
+                authentication.getName(),
+                id
+        );
+
+        return ResponseEntity.ok("Note restored from trash");
+    }
 }

@@ -28,6 +28,12 @@ public class Note {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private boolean pinned = false;
+
+    private boolean archived = false;
+
+    private boolean trashed = false;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

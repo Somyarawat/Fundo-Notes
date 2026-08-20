@@ -20,4 +20,12 @@ public interface NoteService {
     );
 
     void deleteNote(String email, Long noteId);
+
+    void togglePin(String email, Long noteId);
+
+    void toggleArchive(String email, Long noteId);
+
+    void moveToTrash(String email, Long noteId);
+
+    void restoreFromTrash(String email, Long noteId);
 }

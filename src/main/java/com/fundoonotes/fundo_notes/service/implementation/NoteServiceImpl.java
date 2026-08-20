@@ -99,6 +99,66 @@ public class NoteServiceImpl implements NoteService {
         noteRepository.delete(note);
     }
 
+    @Override
+    public void togglePin(String email, Long noteId) {
+
+        User user = getUser(email);
+
+        Note note = noteRepository
+                .findByIdAndUser(noteId, user)
+                .orElseThrow(() ->
+                        new RuntimeException("Note not found"));
+
+        note.setPinned(!note.isPinned());
+
+        noteRepository.save(note);
+    }
+
+    @Override
+    public void toggleArchive(String email, Long noteId) {
+
+        User user = getUser(email);
+
+        Note note = noteRepository
+                .findByIdAndUser(noteId, user)
+                .orElseThrow(() ->
+                        new RuntimeException("Note not found"));
+
+        note.setArchived(!note.isArchived());
+
+        noteRepository.save(note);
+    }
+
+    @Override
+    public void moveToTrash(String email, Long noteId) {
+
+        User user = getUser(email);
+
+        Note note = noteRepository
+                .findByIdAndUser(noteId, user)
+                .orElseThrow(() ->
+                        new RuntimeException("Note not found"));
+
+        note.setTrashed(true);
+
+        noteRepository.save(note);
+    }
+
+    @Override
+    public void restoreFromTrash(String email, Long noteId) {
+
+        User user = getUser(email);
+
+        Note note = noteRepository
+                .findByIdAndUser(noteId, user)
+                .orElseThrow(() ->
+                        new RuntimeException("Note not found"));
+
+        note.setTrashed(false);
+
+        noteRepository.save(note);
+    }
+
     private User getUser(String email) {
 
         return userRepository.findByEmail(email)
@@ -112,6 +172,9 @@ public class NoteServiceImpl implements NoteService {
                 note.getId(),
                 note.getTitle(),
                 note.getDescription(),
+                note.isPinned(),
+                note.isArchived(),
+                note.isTrashed(),
                 note.getCreatedAt(),
                 note.getUpdatedAt()
         );
